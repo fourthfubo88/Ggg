@@ -1,0 +1,13 @@
+name = "airmail-lookup"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "220bb79112ee4544809d9161393f062b"
+
+[vars]
+# "direct" if your key came from developers.movieofthenight.com, "rapidapi" if it came from RapidAPI
+API_SOURCE = "direct"
+# Once your site has a real address, put it here (e.g. "https://airmail.pages.dev") so only your site can use the worker
+ALLOWED_ORIGIN = "*"
