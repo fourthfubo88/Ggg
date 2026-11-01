@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airmail — where is it streaming?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E3E8EA;
+  --sheet:#F8F9F7;
+  --ink:#1A2238;
+  --ink-soft:#4E5770;
+  --rule:#C9D0D6;
+  --red:#C8323C;
+  --blue:#1E4FA0;
+  --gold:#E8A21A;
+  --gold-ink:#5A3D00;
+  --sel:#FFF3D6;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#141A24;
+    --sheet:#1D2430;
+    --ink:#E7EAF0;
+    --ink-soft:#9AA3B5;
+    --rule:#323B4B;
+    --red:#D9505A;
+    --blue:#4F7FD1;
+    --gold:#F0B440;
+    --gold-ink:#2A1C00;
+    --sel:#2E2A1F;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.5;
+}
+.display{
+  font-family:"Big Shoulders Display","Oswald","Arial Narrow",Impact,sans-serif;
+  letter-spacing:.01em;
+}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---------- The envelope: the one loud thing ---------- */
+.envelope{
+  max-width:1080px;
+  margin:28px auto 0;
+  padding:12px;
+  background:repeating-linear-gradient(-45deg,
+    var(--red) 0 16px, var(--sheet) 16px 26px,
+    var(--blue) 26px 42px, var(--sheet) 42px 52px);
+}
+.envelope-inner{
+  background:var(--sheet);
+  padding:36px 40px 34px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px 40px;
+  align-items:start;
+}
+h1{
+  margin:0;
+  font-size:clamp(46px,8.5vw,104px);
+  line-height:.88;
+  font-weight:900;
+  max-width:11ch;
+  text-transform:none;
+}
+.lede{margin:16px 0 0;color:var(--ink-soft);max-width:46ch}
+.stamp{
+  width:132px;height:156px;
+  background:var(--gold);
+  color:var(--gold-ink);
+  padding:10px;
+  transform:rotate(4deg);
+  -webkit-mask:radial-gradient(circle 5px at 5px 5px,transparent 98%,#000) -5px -5px/13px 13px;
+          mask:radial-gradient(circle 5px at 5px 5px,transparent 98%,#000) -5px -5px/13px 13px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.stamp b{font-size:58px;line-height:.9;font-weight:900}
+.stamp span{font-size:14px;line-height:1.2;font-weight:700}
+
+form.search{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:1fr minmax(170px,240px) auto;
+  gap:12px;
+  margin-top:8px;
+}
+label.field{display:flex;flex-direction:column;gap:6px;font-size:15px;color:var(--ink-soft)}
+input,select,button{font:inherit;color:inherit}
+input[type=text],select{
+  background:transparent;
+  border:0;
+  border-bottom:2px solid var(--ink);
+  padding:8px 2px;
+  font-size:22px;
+  border-radius:0;
+  width:100%;
+}
+select{font-size:18px;cursor:pointer}
+select option{background:var(--sheet);color:var(--ink)}
+button.go{
+  align-self:end;
+  background:var(--ink);
+  color:var(--sheet);
+  border:0;
+  padding:14px 26px;
+  font-weight:700;
+  cursor:pointer;
+  border-radius:2px;
+}
+button.go:disabled{opacity:.55;cursor:wait}
+.try{grid-column:1 / -1;font-size:15px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.try button{background:none;border:0;padding:0;color:var(--blue);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:15px}
+
+/* ---------- Body ---------- */
+main{
+  max-width:1080px;
+  margin:0 auto;
+  padding:40px 12px 80px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 340px;
+  gap:48px;
+}
+section h2{
+  font-size:40px;line-height:1;margin:0 0 6px;font-weight:800;
+}
+.sub{color:var(--ink-soft);margin:0 0 20px;font-size:15px}
+
+.status{padding:28px 0;color:var(--ink-soft);max-width:52ch}
+.status.err{color:var(--red)}
+.status strong{color:var(--ink)}
+.envelope-loader{
+  height:6px;margin-top:14px;max-width:320px;
+  background:repeating-linear-gradient(-45deg,var(--red) 0 8px,transparent 8px 12px,var(--blue) 12px 20px,transparent 20px 24px);
+  background-size:48px 6px;
+  animation:slide 1s linear infinite;
+}
+@keyframes slide{to{background-position:48px 0}}
+@media (prefers-reduced-motion:reduce){.envelope-loader{animation:none}}
+
+.toolbar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.toolbar input{font-size:16px;max-width:260px;border-bottom-width:1px}
+.toolbar .count{font-size:15px;color:var(--ink-soft)}
+
+ul.rows{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+ul.rows li{border-bottom:1px solid var(--rule)}
+.row{
+  display:grid;
+  grid-template-columns:52px 160px 1fr;
+  gap:14px;
+  width:100%;
+  padding:14px 8px;
+  background:none;border:0;text-align:left;cursor:pointer;
+  align-items:start;
+}
+.row[aria-pressed=true]{background:var(--sel)}
+.postmark{
+  width:44px;height:44px;border-radius:50%;
+  border:2px dashed var(--ink-soft);
+  display:grid;place-items:center;font-size:22px;
+}
+.cname{font-weight:700;padding-top:9px}
+.cname small{display:block;font-weight:400;font-size:13px;color:var(--ink-soft)}
+.services{display:flex;flex-wrap:wrap;gap:6px;padding-top:8px}
+.svc{font-size:14px;padding:3px 9px;border:1px solid var(--ink);border-radius:2px;white-space:nowrap}
+.svc.flatrate{background:var(--ink);color:var(--sheet)}
+.svc.free{border-color:var(--blue);color:var(--blue);border-width:2px}
+.svc.rent,.svc.buy{border-style:dashed;color:var(--ink-soft);border-color:var(--ink-soft)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--ink-soft);margin:12px 0 18px}
+.legend .svc{font-size:12px;padding:1px 7px}
+
+/* ---------- VPN column ---------- */
+aside{position:sticky;top:20px;align-self:start}
+.vpn-card{background:var(--sheet);padding:24px 22px;border-left:6px solid var(--blue)}
+.vpn-card h2{font-size:32px}
+.vpn-card select{font-size:17px;margin-bottom:16px}
+ol.vpns{list-style:none;padding:0;margin:0}
+ol.vpns li{padding:14px 0;border-top:1px solid var(--rule)}
+ol.vpns .name{font-weight:700;font-size:18px}
+ol.vpns .meta{font-size:14px;color:var(--ink-soft)}
+ol.vpns .note{font-size:14px;margin-top:4px}
+.fine{font-size:13px;color:var(--ink-soft);margin-top:16px;line-height:1.45}
+
+@media (max-width:860px){
+  main{grid-template-columns:1fr;gap:40px}
+  aside{position:static}
+}
+@media (max-width:640px){
+  .envelope{margin:12px 8px 0;padding:9px}
+  .envelope-inner{padding:24px 20px;grid-template-columns:1fr}
+  .stamp{display:none}
+  form.search{grid-template-columns:1fr}
+  button.go{width:100%}
+  .row{grid-template-columns:44px 1fr}
+  .row .services{grid-column:1 / -1}
+  .postmark{width:38px;height:38px;font-size:19px}
+}
+
+/* ---------- Live suggestions ---------- */
+.combo{position:relative}
+.suggest{
+  position:absolute;left:0;right:0;top:100%;z-index:20;
+  margin:4px 0 0;padding:0;list-style:none;
+  background:var(--sheet);
+  border:2px solid var(--ink);
+  max-height:440px;overflow-y:auto;
+  box-shadow:6px 6px 0 var(--blue);
+}
+.suggest[hidden]{display:none}
+.suggest li{
+  display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;
+  padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--rule);
+}
+.suggest li:last-child{border-bottom:0}
+.suggest li[aria-selected=true]{background:var(--sel)}
+.suggest .t{font-weight:700;line-height:1.2}
+.suggest .t mark{background:none;color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.suggest .m{font-size:13px;color:var(--ink-soft);white-space:nowrap}
+.suggest .d{display:block;font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:2px}
+.titlehead{display:flex;gap:18px;align-items:flex-end;margin-bottom:6px}
+.titlehead img{width:72px;height:108px;object-fit:cover;background:var(--rule);flex:none}
+.disclose{font-size:13px;color:var(--ink-soft);margin:14px 0 0}
+.suggest .empty{display:block;cursor:default;color:var(--ink-soft);font-size:15px}
+.credit{font-size:13px;color:var(--ink-soft);margin-top:18px}
+</style>
+</head>
+<body>
+
+<header class="envelope">
+  <div class="envelope-inner">
+    <div>
+      <h1 class="display">Where in the world is it streaming?</h1>
+      <p class="lede">Start typing a movie or show. Pick it, and you'll see every country where it's on a streaming service, plus which free VPNs have servers there.</p>
+    </div>
+    <div class="stamp display" aria-hidden="true"><b>190</b><span>countries, one search</span></div>
+
+    <form class="search" id="searchForm" autocomplete="off">
+      <div class="field combo">
+        <label for="q">Movie or show</label>
+        <input type="text" id="q" placeholder="Start typing, e.g. bou" role="combobox"
+          aria-autocomplete="list" aria-expanded="false" aria-controls="suggest">
+        <ul class="suggest" id="suggest" role="listbox" hidden></ul>
+      </div>
+      <label class="field">Put this country first
+        <select id="focusCountry"></select>
+      </label>
+      <button class="go" id="goBtn" type="submit">Show availability</button>
+    </form>
+    
+  </div>
+</header>
+
+<main>
+  <section id="results" aria-live="polite">
+    <h2 class="display">Search a title to begin</h2>
+    <p class="sub">Suggestions appear as you type, most popular first. Pick one to see every country it streams in.</p>
+  </section>
+
+  <aside>
+    <div class="vpn-card">
+      <h2 class="display">Free VPNs</h2>
+      <label class="field" style="margin-top:8px">Servers in
+        <select id="vpnCountry"></select>
+      </label>
+      <ol class="vpns" id="vpnList"></ol>
+      <p class="disclose" id="disclose" hidden>Some links here earn this site a commission if you buy a paid plan. That never changes which VPNs are listed.</p>
+      <p class="fine">Free server lists change often; check each provider's site before relying on one. Most streaming services block VPN traffic, free servers especially, and their terms usually say content is licensed for the country you're in.</p>
+    </div>
+  </aside>
+</main>
+
+<script>
+// ===== Settings =====
+// After deploying worker.js (see SETUP.md), paste its address here, e.g. "https://airmail-lookup.yourname.workers.dev"
+const WORKER_URL = "";
+
+// Free-tier server countries as best known in late 2026. Verify before relying on these.
+// affiliateUrl: paste your tracking link once a program approves you. Leave "" to link normally.
+const VPNS = [
+  {name:"Proton VPN Free", url:"https://protonvpn.com/free-vpn", affiliateUrl:"", cap:"No data cap",
+   note:"Free plan connects you to a server in one of these countries; you can't always pick which.",
+   countries:["US","NL","JP","PL","RO","NO","CH","SG","MX","CA"]},
+  {name:"Windscribe Free", url:"https://windscribe.com", affiliateUrl:"", cap:"10 GB / month with email",
+   note:"You choose the exact location.",
+   countries:["US","CA","GB","DE","FR","NL","NO","RO","CH","HK","TR"]},
+  {name:"hide.me Free", url:"https://hide.me/en/free-vpn", affiliateUrl:"", cap:"10 GB / month",
+   note:"Small set of locations; you choose the exact one.",
+   countries:["US","CA","NL","DE","CH"]},
+  {name:"PrivadoVPN Free", url:"https://privadovpn.com", affiliateUrl:"", cap:"10 GB / month",
+   note:"Drops to a slow speed once the cap is used.",
+   countries:["US","CA","GB","DE","NL","FR","CH","MX"]},
+  {name:"TunnelBear Free", url:"https://www.tunnelbear.com", affiliateUrl:"", cap:"2 GB / month",
+   note:"Every location is open on the free plan, but the cap is small.",
+   countries:["US","CA","MX","BR","AR","CL","CO","PE","GB","IE","FR","DE","NL","BE","ES","PT","IT","CH","AT","DK","SE","NO","FI","PL","CZ","RO","HU","BG","RS","GR","CY","MD","LV","LT","IN","JP","KR","TW","HK","SG","MY","ID","PH","AU","NZ","ZA","NG","KE"]},
+  {name:"Hotspot Shield Basic", url:"https://www.hotspotshield.com", affiliateUrl:"", cap:"Daily limit, ads",
+   note:"Free plan is US-only.",
+   countries:["US"]}
+];
+
+const BASE_CODES = ["US","CA","MX","BR","AR","CL","CO","PE","GB","IE","FR","DE","NL","BE","ES","PT","IT","CH","AT","DK","SE","NO","FI","PL","CZ","RO","HU","BG","RS","GR","TR","UA","LV","LT","EE","MD","CY","IL","AE","SA","EG","ZA","NG","KE","IN","JP","KR","TW","HK","SG","MY","ID","PH","TH","VN","AU","NZ"];
+
+// Wikidata item types counted as a movie or show
+const SCREEN_TYPES = ["Q11424","Q29168811","Q506240","Q93204","Q24862","Q202866","Q5398426","Q581714","Q1259759","Q526877","Q63952888","Q15416","Q21191270"];
+
+// ===== Helpers =====
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const flag = code => /^[A-Z]{2}$/.test(code||"") ? String.fromCodePoint(...[...code].map(c => 0x1F1E6 + c.charCodeAt(0) - 65)) : "🌐";
+let regionNames; try { regionNames = new Intl.DisplayNames(["en"], {type:"region"}); } catch(e) {}
+const cname = code => { try { return regionNames ? regionNames.of(code) : code; } catch(e){ return code; } };
+const vpnsFor = code => VPNS.filter(v => v.countries.includes(code));
+const fold = s => String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const stripArticle = t => t.replace(/^(the|a|an)\s+/, "");
+
+let state = { selected:"US", title:null, show:null, filter:"" };
+
+// ===== Wikidata (free, public domain, no key) =====
+const WD = "https://www.wikidata.org/w/api.php";
+async function wd(params){
+  const qs = new URLSearchParams({format:"json", origin:"*", ...params}).toString();
+  const res = await fetch(WD + "?" + qs);
+  if(!res.ok) throw new Error("Wikidata returned " + res.status + ".");
+  return res.json();
+}
+
+const NOT_A_TITLE = /\b(director|actor|actress|producer|screenwriter|writer|company|studio|festival|character|soundtrack|album|song|single|episode|season|novel|book|award|band|musician|franchise|cinema|theatre|theater|channel|network|award)\b/i;
+const IS_TITLE = /\b(film|movie|television|tv series|series|miniseries|sitcom|anime|documentary|soap opera|web series|programme|program)\b/i;
+
+function guessType(desc){ return /\b(series|sitcom|anime|soap|miniseries|programme|program|show)\b/i.test(desc||"") ? "tv" : "movie"; }
+function guessYear(desc){ const m = String(desc||"").match(/\b(18|19|20)\d{2}\b/); return m ? m[0] : ""; }
+
+async function suggestTitles(q){
+  const words = q.trim().split(/\s+/).map(w => w.replace(/[^\p{L}\p{N}'’-]/gu, "")).filter(Boolean);
+  if(!words.length) return [];
+  const textQuery = words.join(" ") + "* haswbstatement:" + SCREEN_TYPES.map(t => "P31=" + t).join("|");
+
+  // A: Wikidata's own autocomplete (matches the start of the full title)
+  // B: full-text search restricted to movies and shows (matches any word, e.g. "bou" → "The Bourne Identity")
+  const [a, b] = await Promise.all([
+    wd({action:"wbsearchentities", search:q.trim(), language:"en", uselang:"en", type:"item", limit:"50"}),
+    wd({action:"query", generator:"search", gsrsearch:textQuery, gsrnamespace:"0", gsrlimit:"40", prop:"pageprops", ppprop:"wb-sitelinks"}).catch(() => ({}))
+  ]);
+
+  const items = new Map();
+  (a.search || []).forEach((r, i) => {
+    const d = r.description || "";
+    if(!IS_TITLE.test(d) || NOT_A_TITLE.test(d)) return;
+    items.set(r.id, {id:r.id, title:r.label, desc:d, order:i});
+  });
+  const bPages = Object.values(b.query?.pages || {});
+  const sitelinks = {};
+  bPages.forEach(p => {
+    sitelinks[p.title] = +(p.pageprops?.["wb-sitelinks"] || 0);
+    if(!items.has(p.title)) items.set(p.title, {id:p.title, title:null, desc:"", order:50 + (p.index || 0)});
+  });
+  if(!items.size) return [];
+
+  // Fill in missing labels, and popularity (number of Wikipedia editions) for everything
+  const ids = [...items.keys()].slice(0, 50);
+  const needLabels = ids.filter(id => !items.get(id).title);
+  const needLinks = ids.filter(id => !(id in sitelinks));
+  const [labels, links] = await Promise.all([
+    needLabels.length ? wd({action:"wbgetentities", ids:needLabels.join("|"), props:"labels|descriptions", languages:"en", languagefallback:"1"}) : {},
+    needLinks.length ? wd({action:"query", titles:needLinks.join("|"), prop:"pageprops", ppprop:"wb-sitelinks"}) : {}
+  ]);
+  Object.values(labels.entities || {}).forEach(e => {
+    const it = items.get(e.id); if(!it) return;
+    it.title = e.labels?.en?.value || Object.values(e.labels || {})[0]?.value || null;
+    it.desc = e.descriptions?.en?.value || "";
+  });
+  Object.values(links.query?.pages || {}).forEach(p => { sitelinks[p.title] = +(p.pageprops?.["wb-sitelinks"] || 0); });
+
+  // Rank: titles that start with what was typed (ignoring "The"/"A"), then titles where a later word does; most popular first
+  const qf = fold(q).trim();
+  const tier1 = [], tier2 = [];
+  for(const it of items.values()){
+    if(!it.title) continue;
+    const t = fold(it.title);
+    it.pop = (sitelinks[it.id] || 0) + (100 - it.order) / 1000;
+    it.type = guessType(it.desc); it.year = guessYear(it.desc);
+    if(t.startsWith(qf) || stripArticle(t).startsWith(qf)) tier1.push(it);
+    else if(t.split(/[\s:\-–(]+/).some(w => w.startsWith(qf))) tier2.push(it);
+  }
+  const byPop = (x,y) => y.pop - x.pop;
+  return [...tier1.sort(byPop), ...tier2.sort(byPop)].slice(0, 8);
+}
+
+async function imdbIdFor(qid){
+  const data = await wd({action:"wbgetclaims", entity:qid, property:"P345"});
+  const claim = (data.claims?.P345 || []).find(c => /^tt\d+$/.test(c.mainsnak?.datavalue?.value || ""));
+  return claim ? claim.mainsnak.datavalue.value : null;
+}
+
+// ===== Country selects + VPN panel =====
+function fillSelects(extra = []){
+  const codes = [...new Set([...BASE_CODES, ...extra])];
+  const sorted = codes.map(c => [c, cname(c)]).sort((a,b)=>a[1].localeCompare(b[1]));
+  const opts = sorted.map(([c,n]) => `<option value="${c}">${flag(c)} ${esc(n)}</option>`).join("");
+  const f = $("#focusCountry").value || "US";
+  $("#focusCountry").innerHTML = `<option value="">No preference</option>` + opts;
+  $("#vpnCountry").innerHTML = opts;
+  $("#focusCountry").value = f;
+  $("#vpnCountry").value = state.selected;
+}
+
+function renderVPNs(){
+  const code = state.selected;
+  $("#vpnCountry").value = code;
+  const list = vpnsFor(code);
+  $("#disclose").hidden = !VPNS.some(v => v.affiliateUrl);
+  if(!list.length){
+    $("#vpnList").innerHTML = `<li><div class="note">None of the free plans listed here have servers in ${esc(cname(code))}. Paid plans from the same providers usually do.</div></li>`;
+    return;
+  }
+  $("#vpnList").innerHTML = list.map(v => {
+    const href = v.affiliateUrl || v.url;
+    const rel = v.affiliateUrl ? "sponsored noopener" : "noopener";
+    return `<li>
+      <div class="name"><a href="${esc(href)}" target="_blank" rel="${rel}">${esc(v.name)}</a></div>
+      <div class="meta">${esc(v.cap)}</div>
+      <div class="note">${esc(v.note)}</div>
+    </li>`;
+  }).join("");
+}
+
+// ===== Live suggestions =====
+const box = () => $("#suggest");
+let items = [], active = -1, debounce, cache = new Map();
+
+async function fetchSuggestions(q){
+  const key = fold(q).trim();
+  if(cache.has(key)) return cache.get(key);
+  const list = await suggestTitles(q);
+  cache.set(key, list);
+  return list;
+}
+
+function highlight(title, q){
+  const n = q.trim().length, t = fold(title), qf = fold(q).trim();
+  let i = -1;
+  if(t.startsWith(qf)) i = 0;
+  else { const m = t.search(new RegExp("(^|[\\s:\\-–(])" + qf.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"))); if(m >= 0) i = m === 0 ? 0 : m + 1; }
+  if(i < 0) return esc(title);
+  return esc(title.slice(0,i)) + "<mark>" + esc(title.slice(i,i+n)) + "</mark>" + esc(title.slice(i+n));
+}
+
+function showSuggestions(list, q){
+  items = list; active = list.length ? 0 : -1;
+  const el = box();
+  el.innerHTML = list.length ? list.map((r,i) => `
+      <li role="option" id="opt${i}" data-i="${i}" aria-selected="${i===active}">
+        <span class="t">${highlight(r.title, q)}<span class="d">${esc(r.desc)}</span></span>
+        <span class="m">${r.type === "tv" ? "Series" : "Film"}${r.year ? ", " + r.year : ""}</span>
+      </li>`).join("")
+    : `<li class="empty">No movies or shows begin with “${esc(q)}”.</li>`;
+  el.hidden = false;
+  $("#q").setAttribute("aria-expanded","true");
+  $("#q").setAttribute("aria-activedescendant", active >= 0 ? "opt0" : "");
+}
+function hideSuggestions(){ box().hidden = true; $("#q").setAttribute("aria-expanded","false"); }
+
+function moveActive(d){
+  if(!items.length) return;
+  active = (active + d + items.length) % items.length;
+  box().querySelectorAll("[role=option]").forEach((li,i) => li.setAttribute("aria-selected", i===active));
+  $("#opt"+active).scrollIntoView({block:"nearest"});
+  $("#q").setAttribute("aria-activedescendant", "opt"+active);
+}
+
+function onType(){
+  const q = $("#q").value;
+  clearTimeout(debounce);
+  if(q.trim().length < 2){ hideSuggestions(); return; }
+  debounce = setTimeout(async () => {
+    try{
+      const list = await fetchSuggestions(q);
+      if($("#q").value === q) showSuggestions(list, q);
+    }catch(e){
+      if(e.name !== "AbortError"){ box().innerHTML = `<li class="empty">${esc(e.message)}</li>`; box().hidden = false; }
+    }
+  }, 200);
+}
+
+// ===== Availability (via your worker) =====
+async function choose(item){
+  hideSuggestions();
+  $("#q").value = item.title;
+  state.title = item; state.filter = ""; state.show = null;
+  const res = $("#results");
+  const fail = msg => { res.innerHTML = `<h2 class="display">${esc(item.title)}</h2><p class="status err">${msg}</p>`; };
+  if(!WORKER_URL){ fail("Availability lookups aren't set up yet. Deploy the lookup worker and paste its address into WORKER_URL at the top of the script."); return; }
+  res.innerHTML = `<h2 class="display">${esc(item.title)}</h2><div class="status">Loading countries…<div class="envelope-loader"></div></div>`;
+  try{
+    const imdb = await imdbIdFor(item.id);
+    if(!imdb){ fail("This title has no IMDb ID on Wikidata, so its availability can't be looked up."); return; }
+    const r = await fetch(String(WORKER_URL.replace(/\/$/,"") + "/show/" + imdb));
+    if(r.status === 429){ fail("Today's lookup limit has been reached. Titles other people already searched today still load; try a new one tomorrow."); return; }
+    if(!r.ok){ fail("The availability service returned an error (" + r.status + "). Try again in a minute."); return; }
+    const data = await r.json();
+    if(!data.found){
+      res.innerHTML = `<h2 class="display">${esc(item.title)}</h2><p class="status">No streaming, rental or purchase options are listed for this title in any country yet.</p>`;
+      return;
+    }
+    state.show = data;
+    fillSelects(Object.keys(data.countries));
+    const focus = $("#focusCountry").value;
+    if(focus){ state.selected = focus; renderVPNs(); }
+    renderResults();
+  }catch(e){
+    fail("The lookup didn't finish: " + esc(e.message) + " Check your connection and try again.");
+  }
+}
+
+function renderResults(){
+  const item = state.title, show = state.show, res = $("#results");
+  if(!item || !show) return;
+  const focus = $("#focusCountry").value;
+  const rank = {subscription:0, addon:1, free:2, rent:3, buy:4};
+  let rows = Object.entries(show.countries).map(([code, opts]) => {
+    const seen = new Set();
+    const list = opts.slice().sort((a,b) => (rank[a.type] ?? 9) - (rank[b.type] ?? 9))
+      .filter(o => { const k = o.service + (o.addon||"") + (o.type==="rent"||o.type==="buy" ? "rb" : o.type); if(seen.has(k)) return false; seen.add(k); return true; });
+    return {code, name:cname(code), list, streams:list.filter(o => o.type!=="rent" && o.type!=="buy").length};
+  });
+  const streamable = rows.filter(r => r.streams > 0).length;
+  rows.sort((a,b) => (b.code===focus) - (a.code===focus) || (b.streams>0) - (a.streams>0) || a.name.localeCompare(b.name));
+
+  const f = fold(state.filter).trim();
+  const shown = f ? rows.filter(r => fold(r.name + " " + r.list.map(s=>s.service).join(" ")).includes(f)) : rows;
+  const meta = [show.type === "series" ? "TV series" : "Film", show.year].filter(Boolean).join(", ");
+  const cls = t => t === "free" ? "free" : (t === "rent" || t === "buy") ? t : "flatrate";
+
+  res.innerHTML = `
+    <div class="titlehead">
+      ${show.poster ? `<img src="${esc(show.poster)}" alt="">` : ""}
+      <div><h2 class="display">${esc(show.title || item.title)}</h2>
+      <p class="sub" style="margin:0">${esc(meta)}. Streaming in ${streamable} ${streamable===1?"country":"countries"}${rows.length - streamable ? `, rent or buy only in ${rows.length - streamable} more` : ""}.</p></div>
+    </div>
+    <div class="toolbar">
+      <input type="text" id="rowFilter" placeholder="Filter by country or service" value="${esc(state.filter)}" aria-label="Filter results">
+      <span class="count">${shown.length} shown</span>
+    </div>
+    <div class="legend">
+      <span><span class="svc flatrate">Netflix</span> included with subscription</span>
+      <span><span class="svc free">Tubi</span> free</span>
+      <span><span class="svc rent">Apple TV</span> rent or buy</span>
+    </div>
+    <ul class="rows">
+      ${shown.map(r => {
+        const n = vpnsFor(r.code).length;
+        const svcs = r.list.map(s => `<span class="svc ${cls(s.type)}">${esc(s.service)}${s.addon ? " via " + esc(s.addon) : ""}</span>`).join("");
+        return `<li><button class="row" data-code="${esc(r.code)}" aria-pressed="${r.code===state.selected}">
+          <span class="postmark" aria-hidden="true">${flag(r.code)}</span>
+          <span class="cname">${esc(r.name)}<small>${n ? n + " free VPN" + (n>1?"s":"") : "No free VPN"}</small></span>
+          <span class="services">${svcs}</span>
+        </button></li>`;
+      }).join("")}
+    </ul>
+    <p class="credit">Streaming data from the Streaming Availability API by Movie of the Night. Title search from Wikidata.</p>`;
+
+  $("#rowFilter").addEventListener("input", e => {
+    state.filter = e.target.value;
+    const pos = e.target.selectionStart;
+    renderResults();
+    const again = $("#rowFilter"); again.focus(); again.setSelectionRange(pos,pos);
+  });
+  res.querySelectorAll(".row").forEach(b => b.addEventListener("click", () => {
+    state.selected = b.dataset.code;
+    res.querySelectorAll(".row").forEach(x => x.setAttribute("aria-pressed", x===b));
+    renderVPNs();
+    if(window.innerWidth < 860) $("aside").scrollIntoView({behavior:"smooth", block:"start"});
+  }));
+}
+
+// ===== Wire up =====
+fillSelects();
+renderVPNs();
+
+const q = $("#q");
+q.addEventListener("input", onType);
+q.addEventListener("focus", () => { if(items.length && q.value.trim().length >= 2) box().hidden = false; });
+q.addEventListener("keydown", e => {
+  if(box().hidden) return;
+  if(e.key === "ArrowDown"){ e.preventDefault(); moveActive(1); }
+  else if(e.key === "ArrowUp"){ e.preventDefault(); moveActive(-1); }
+  else if(e.key === "Escape"){ hideSuggestions(); }
+});
+box().addEventListener("mousedown", e => {
+  const li = e.target.closest("[role=option]");
+  if(li){ e.preventDefault(); choose(items[+li.dataset.i]); }
+});
+document.addEventListener("click", e => { if(!e.target.closest(".combo")) hideSuggestions(); });
+
+$("#searchForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if(!box().hidden && items[active]) return choose(items[active]);
+  if(q.value.trim().length < 2) return;
+  try{
+    const list = await fetchSuggestions(q.value);
+    if(list.length) choose(list[0]); else showSuggestions(list, q.value);
+  }catch(err){ $("#results").innerHTML = `<p class="status err">${esc(err.message)}</p>`; }
+});
+
+$("#vpnCountry").addEventListener("change", e => {
+  state.selected = e.target.value;
+  renderVPNs();
+  document.querySelectorAll(".row").forEach(x => x.setAttribute("aria-pressed", x.dataset.code===state.selected));
+});
+$("#focusCountry").addEventListener("change", e => {
+  if(e.target.value){ state.selected = e.target.value; renderVPNs(); }
+  renderResults();
+});
+
+</script>
+</body>
+</html>
