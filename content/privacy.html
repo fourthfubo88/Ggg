@@ -1,0 +1,81 @@
+<!--meta {"path":"privacy/", "title":"Privacy policy", "description":"How Airmail handles information when you search for movies and shows, click links, and see ads."} -->
+<!--
+  DRAFT FOR LEGAL REVIEW — notes for counsel:
+  - Written to describe the site as it will run at launch: static pages on GitHub Pages, a Cloudflare Worker for
+    availability lookups, title search sent from the visitor's browser straight to Wikidata, optional Cloudflare
+    Web Analytics, Google AdSense, and VPN affiliate links. Remove sections for anything not in use at launch.
+  - Please confirm: whether personalized ads count as "sharing" under CCPA/CPRA and what opt-out mechanism is needed
+    (Google's US state privacy messages via AdSense "Privacy & messaging" is the planned tool), Global Privacy Control
+    handling, EEA/UK consent via a Google-certified CMP, and the children's age threshold.
+  - Please also check the Streaming Availability API (Movie of the Night) terms on caching and publishing its data.
+  - Placeholders filled from config.json: operator name, contact email, effective date.
+-->
+<main id="main" class="prose">
+<h1>Privacy policy</h1>
+<p class="updated">Effective {{EFFECTIVE_DATE}}</p>
+
+<p>{{SITE_NAME}} ("we", "us") runs the website at {{SITE_URL}}. This policy explains what information is involved when you use the site, who handles it, and the choices you have. {{SITE_NAME}} is operated by {{OPERATOR}}.</p>
+
+<h2>The short version</h2>
+<ul>
+  <li>You don't need an account, and we don't ask for your name, email or location to use the site.</li>
+  <li>We don't set our own cookies.</li>
+  <li>Some companies that help run the site, such as our hosting provider and our advertising partner, receive technical information like your IP address. Advertising partners may use cookies.</li>
+  <li>We don't sell your personal information for money.</li>
+</ul>
+
+<h2>Information involved when you use the site</h2>
+
+<h3>Searching for a title</h3>
+<p>As you type in the search box, your browser sends what you've typed directly to Wikidata, a free database run by the Wikimedia Foundation, to suggest matching titles. We don't receive or store those searches. Wikimedia's handling of these requests is covered by the <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">Wikimedia Foundation privacy policy</a>.</p>
+
+<h3>Looking up where a title streams</h3>
+<p>When you pick a title, your browser asks our lookup service for that title's availability. The service runs on Cloudflare Workers. The request contains the title's IMDb identifier, and, like any web request, your IP address and basic browser information. We store availability results by title so we don't have to look the same title up repeatedly; we don't store who asked for them. Cloudflare processes request data as described in the <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare privacy policy</a>.</p>
+<p>Availability data comes from the Streaming Availability API by Movie of the Night. Our lookup service contacts it on your behalf; your IP address isn't passed to it.</p>
+
+<h3>Hosting</h3>
+<p>The site's pages are hosted on GitHub Pages. When you visit, GitHub receives your IP address and may log it for security purposes, as described in the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub privacy statement</a>.</p>
+
+<h3>Site statistics</h3>
+<p>We may use Cloudflare Web Analytics to count visits and see which pages are popular. It doesn't use cookies or track you across other websites, and we only see totals, not individual visitors.</p>
+
+<h3>Advertising</h3>
+<p>We show ads served by Google. Google and its partners may use cookies or similar technologies to show ads based on your visits to this and other websites, to limit how often you see an ad, and to measure ad performance. You can learn more in <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How Google uses information from sites or apps that use its services</a>, and you can turn off personalized ads in <a href="https://adssettings.google.com" rel="noopener">Google's ad settings</a>.</p>
+<p>If you're in the European Economic Area, the United Kingdom or Switzerland, we ask for your consent before cookies are used for advertising, and you can change your choice at any time using the privacy settings link on the site.</p>
+
+<h3>Affiliate links</h3>
+<p>Some links to VPN providers are affiliate links. If you click one, the provider may set a cookie so it can tell that you came from our site, and pay us a commission if you buy a paid plan. We receive reports of clicks and sales, not your name or payment details. See our <a href="{{BASE}}disclosure/">affiliate disclosure</a>.</p>
+
+<h3>Emailing us</h3>
+<p>If you email us, we receive your email address and whatever you include in your message, and use them only to reply.</p>
+
+<h2>Cookies</h2>
+<p>We don't set cookies ourselves. Cookies on this site come from our advertising partner and, after you click an affiliate link, from that VPN provider. You can block or delete cookies in your browser settings; the site's search and lookups still work without them.</p>
+
+<h2>Legal bases for processing (EEA, UK and Switzerland)</h2>
+<p>We rely on our legitimate interest in running, securing and improving the site for hosting, lookups and site statistics, and on your consent for advertising cookies and personalized ads.</p>
+
+<h2>Sharing</h2>
+<p>We share information only with the service providers named above, as needed to run the site, and when required by law. We don't sell personal information for money. Under some US state laws, letting advertising partners use cookies for personalized ads may count as "selling" or "sharing" personal information; you can opt out using the privacy settings link on the site, and we honor Global Privacy Control signals sent by your browser.</p>
+
+<h2>How long information is kept</h2>
+<p>We keep cached availability results for about a day before refreshing them; they don't contain personal information. Emails are kept as long as needed to deal with your message. Our service providers keep their own logs according to their policies.</p>
+
+<h2>International transfers</h2>
+<p>Our service providers may process information in the United States and other countries. Where required, they rely on approved transfer mechanisms such as standard contractual clauses.</p>
+
+<h2>Your rights</h2>
+<p>Depending on where you live, you may have the right to access, correct or delete personal information about you, to object to or restrict certain processing, to withdraw consent, and to opt out of targeted advertising. Because we don't collect names or accounts, we usually hold no personal information we can link to you, but we'll help where we can. To make a request, email us at {{CONTACT_EMAIL}}. You also have the right to complain to your local data protection authority.</p>
+
+<h2>Children</h2>
+<p>The site isn't directed at children under 13, and we don't knowingly collect personal information from them.</p>
+
+<h2>Security</h2>
+<p>The site is served over an encrypted connection, and our lookup service keeps its API key private. No method of transmission is perfectly secure, but we take reasonable steps to protect the site.</p>
+
+<h2>Changes to this policy</h2>
+<p>If we change this policy, we'll update the effective date above. If the changes are significant, we'll note them on the site.</p>
+
+<h2>Contact</h2>
+<p>Questions about privacy: {{CONTACT_EMAIL}}</p>
+</main>

@@ -1,0 +1,55 @@
+<!--meta {"path":"", "hero":true, "title":"Airmail: where in the world is it streaming?", "description":"Find every country where a movie or TV show is streaming, on which services, and which free VPNs have servers there. Live search across 60+ countries."} -->
+<header class="envelope">
+  <div class="envelope-inner">
+    <div>
+      <h1>Where in the world is it streaming?</h1>
+      <p class="lede">Start typing a movie or show. Pick it, and you'll see every country where it's on a streaming service, plus which free VPNs have servers there.</p>
+    </div>
+    <div class="stamp" aria-hidden="true"><b>60+</b><span>countries, one search</span></div>
+
+    <form class="search" id="searchForm" autocomplete="off" role="search">
+      <div class="field combo">
+        <label for="q">Movie or show</label>
+        <input type="text" id="q" placeholder="Start typing, e.g. bou" role="combobox"
+          aria-autocomplete="list" aria-expanded="false" aria-controls="suggest">
+        <ul class="suggest" id="suggest" role="listbox" hidden></ul>
+      </div>
+      <label class="field">Put this country first
+        <select id="focusCountry"></select>
+      </label>
+      <button class="go" id="goBtn" type="submit">Show availability</button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+  <div class="cols">
+    <div>
+      <section id="results" aria-live="polite">
+        <h2>Search a title to begin</h2>
+        <p class="sub">Suggestions appear as you type, most popular first. Pick one to see every country it streams in.</p>
+      </section>
+
+      {{POPULAR}}
+
+      <section class="block">
+        <h2>How it works</h2>
+        <p>Streaming catalogs differ by country because services license each film and series region by region. A show that left Netflix in the United States may still be on Netflix in Canada, Japan or the UK.</p>
+        <p>Airmail checks the catalogs of the major services, including Netflix, Prime Video, Disney+, Max, Apple TV, Hulu, Paramount+ and free services like Tubi and Pluto TV, across more than 60 countries. For each country, it also shows which free VPN plans have servers there.</p>
+        <p>Catalogs change often, so check the service itself before you subscribe.</p>
+      </section>
+    </div>
+
+    <aside>
+      <div class="vpn-card">
+        <h2>Free VPNs</h2>
+        <label class="field" style="margin-top:8px">Servers in
+          <select id="vpnCountry"></select>
+        </label>
+        <ol class="vpns" id="vpnList"></ol>
+        <p class="disclose" id="disclose" hidden>Some links here earn this site a commission if you buy a paid plan. That never changes which VPNs are listed. <a href="{{BASE}}disclosure/">How this works</a></p>
+        <p class="fine">Free server lists change often; check each provider's site before relying on one. Most streaming services block VPN traffic, and their terms usually say content is licensed for the country you're in. <a href="{{BASE}}terms/#vpns">Read our note on VPNs</a>.</p>
+      </div>
+    </aside>
+  </div>
+</main>
