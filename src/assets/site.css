@@ -277,3 +277,8 @@ ul.titles span{color:var(--ink-soft);font-size:14px}
   .titlehead img{width:72px;height:108px}
   section h2,.block h2{font-size:34px}
 }
+
+/* ---------- Tables in prose pages ---------- */
+.prose table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0 20px;display:block;overflow-x:auto}
+.prose th,.prose td{text-align:left;vertical-align:top;padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);min-width:120px}
+.prose thead th{border-bottom:2px solid var(--ink)}

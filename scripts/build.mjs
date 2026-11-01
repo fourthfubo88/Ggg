@@ -118,7 +118,8 @@ async function refreshAvailability() {
   const fresh = tracked.filter(t => !t.checkedAt).sort((a, b) => a.rank - b.rank);
   const stale = tracked.filter(t => t.checkedAt && Date.now() - Date.parse(t.checkedAt) > staleMs)
     .sort((a, b) => a.checkedAt.localeCompare(b.checkedAt));
-  const queue = [...fresh, ...stale].slice(0, cfg.lookupsPerRun ?? 40);
+  const limit = process.env.LOOKUPS !== undefined && process.env.LOOKUPS !== "" ? Number(process.env.LOOKUPS) : (cfg.lookupsPerRun ?? 40);
+  const queue = [...fresh, ...stale].slice(0, limit);
   let done = 0;
 
   for (const t of queue) {
