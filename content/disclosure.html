@@ -1,29 +1,25 @@
-<!--meta {"path":"disclosure/", "title":"Affiliate disclosure", "description":"How Airmail earns money through ads and affiliate links, and how that does and doesn't affect what you see."} -->
-<!--
-  DRAFT FOR LEGAL REVIEW — written to meet the FTC Endorsement Guides (16 CFR Part 255).
-  Please confirm placement: a short disclosure appears next to affiliate links on every page that has them,
-  and this page explains it in full.
--->
+<!--meta {"path":"disclosure/", "title":"Affiliate disclosure", "description":"How Airmail is funded, and how ads and affiliate links do and don't affect what you see."} -->
 <main id="main" class="prose">
 <h1>Affiliate disclosure</h1>
 <p class="updated">Effective {{EFFECTIVE_DATE}}</p>
 
-<p>{{SITE_NAME}} is free to use. It pays for itself in two ways: ads, and affiliate links to some VPN providers.</p>
-
-<h2>Affiliate links</h2>
-<p>Some links to VPN providers are affiliate links. If you click one and then buy a paid plan, the provider pays us a commission. It doesn't cost you anything extra. Free plans don't earn us anything.</p>
-<p>Links marked as sponsored in the page code are affiliate links. A note appears next to them wherever they're shown.</p>
-
-<h2>What commissions don't change</h2>
+<p>{{SITE_NAME}} is free to use.{{#ads}} It's paid for by ads{{#affiliates}} and by affiliate links to some VPN providers{{/affiliates}}.{{/ads}}{{^ads}}{{#affiliates}} It's paid for by affiliate links to some VPN providers.{{/affiliates}}{{/ads}}</p>
+{{^affiliates}}{{^ads}}<p>The site doesn't currently earn money from ads or affiliate links. If that changes, this page will explain how, and a note will appear next to any affiliate link.</p>
+{{/ads}}{{/affiliates}}
+{{#affiliates}}<h2>Affiliate links</h2>
+<p>Some links to VPN providers are affiliate links. If you click one and then buy a paid plan, the provider pays us a commission, at no extra cost to you. Free plans don't earn us anything.</p>
+<p>A note appears next to affiliate links wherever they're shown.</p>
+{{/affiliates}}
+<h2>What never affects our listings</h2>
 <ul>
-  <li>Which VPNs we list. A free plan is listed if it has servers in that country, whether or not we have an affiliate deal with the provider.</li>
-  <li>The order or wording of the listings.</li>
-  <li>Streaming availability. Streaming services don't pay us, and we don't earn anything when you subscribe to one.</li>
+  <li><strong>Which VPNs we list.</strong> A free plan is listed if it has servers in that country, whether or not we have an affiliate deal with the provider.</li>
+  <li><strong>The order and wording of listings.</strong></li>
+  <li><strong>Streaming availability.</strong> Streaming services don't pay us, and we earn nothing when you subscribe to one.</li>
 </ul>
-
+{{#ads}}
 <h2>Ads</h2>
-<p>Ads on the site are served by Google. We don't choose individual ads, and advertisers don't influence our content. See our <a href="{{BASE}}privacy/">privacy policy</a> for how ads use cookies.</p>
-
+<p>Ads on the site are served by Google. We don't choose individual ads, and advertisers have no say over our content. See our <a href="{{BASE}}privacy/">privacy policy</a> for how ads use cookies and how to turn off personalized ads.</p>
+{{/ads}}
 <h2>Questions</h2>
-<p>Email us at {{CONTACT_EMAIL}}.</p>
+<p>Email {{CONTACT_EMAIL}}.</p>
 </main>

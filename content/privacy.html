@@ -1,151 +1,152 @@
-<!--meta {"path":"privacy/", "title":"Privacy policy", "description":"How Airmail handles information when you search for movies and shows, click links, and see ads, and the privacy rights you have."} -->
+<!--meta {"path":"privacy/", "title":"Privacy policy", "description":"How Airmail handles information when you search for movies and shows, click links and see ads, and the privacy choices you have."} -->
 <!--
-  DRAFT FOR LEGAL REVIEW — notes for counsel:
-  - Describes the site as it will run at launch: static pages on GitHub Pages, a Cloudflare Worker for availability
-    lookups, title search sent from the visitor's browser straight to Wikidata, Cloudflare Web Analytics
-    (cookieless), Google AdSense, and VPN affiliate links. Remove anything not in use at launch.
-  - Operator is listed as "Everwish" (from config.json). Confirm the legal entity name, entity type and a postal
-    address if one is required (e.g. for GDPR Art. 13 or state laws).
-  - Please confirm: whether personalized ads count as "sale"/"sharing" under CCPA/CPRA and similar state laws; that
-    Google's AdSense "Privacy & messaging" tools (EEA/UK consent via a certified CMP, US state opt-out message)
-    are an adequate opt-out mechanism; Global Privacy Control handling; whether an EU/UK representative is needed;
-    the children's age threshold; response timelines and appeal process.
-  - Please also check the Streaming Availability API (Movie of the Night) terms on caching and publishing its data.
+  Sections wrapped in {{#ads}}…{{/ads}}, {{#analytics}}…{{/analytics}} or {{#affiliates}}…{{/affiliates}} appear only
+  once that feature is switched on in config.json or data/vpns.json, so the published policy always matches the site.
+  {{^ads}}…{{/ads}} appears only while ads are off. When you switch a feature on, update legalEffectiveDate too.
 -->
 <main id="main" class="prose">
 <h1>Privacy policy</h1>
 <p class="updated">Effective {{EFFECTIVE_DATE}}</p>
 
-<p>This policy explains how {{OPERATOR}} ("we", "us", "our") handles information when you use {{SITE_NAME}}, the website at {{SITE_URL}} (the "site"). It covers what information is involved, why, who else receives it, how long it's kept, and the rights and choices you have.</p>
-<p>If you have questions, email {{CONTACT_EMAIL}}.</p>
+<p>This policy explains how {{OPERATOR}} ("we", "us", "our") handles information when you use {{SITE_NAME}}, the website at {{SITE_URL}} (the "site"): what information is involved, why, who else receives it, how long it's kept, and the choices you have.</p>
+<p>Questions? Email {{CONTACT_EMAIL}}.</p>
 
 <h2>Summary</h2>
 <ul>
-  <li>You can use the site without an account, and we never ask for your name, email address or location.</li>
-  <li>We don't set our own cookies or build profiles about you.</li>
-  <li>Companies that help run the site, such as our hosting provider and our advertising partner, receive technical information like your IP address. Our advertising partner uses cookies, with your consent where the law requires it.</li>
-  <li>We don't sell personal information for money. You can opt out of personalized advertising at any time.</li>
+  <li>You can use the site without an account. We never ask for your name, email address or location.</li>
+  <li>We don't set our own cookies and don't build profiles about you.</li>
+  <li>Companies that help run the site, such as our hosting provider, receive technical information like your IP address, as with any website.</li>
+{{#ads}}  <li>Our advertising partner, Google, uses cookies to show and measure ads, and to personalize them where you allow it. You can turn off personalized ads at any time.</li>
+{{/ads}}  <li>We don't sell personal information for money.</li>
 </ul>
 
-<h2>Who is responsible for your information</h2>
-<p>{{OPERATOR}} operates the site and is the "controller" (or "business") responsible for personal information processed through it, except where a partner named below processes information for its own purposes under its own privacy policy, as Google does for advertising.</p>
+<h2>Who is responsible</h2>
+<p>{{OPERATOR}} operates the site and is responsible for personal information processed through it, except where a company named below handles information for its own purposes under its own privacy policy{{#ads}}, as Google does for advertising{{/ads}}.</p>
 
 <h2>Information we process and why</h2>
 
 <h3>Title searches</h3>
-<p>As you type in the search box, your browser sends what you've typed directly to Wikidata, a free database operated by the Wikimedia Foundation, to suggest matching titles. We don't receive, see or store these searches. Wikimedia handles these requests under the <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">Wikimedia Foundation privacy policy</a>.</p>
+<p>As you type in the search box, your browser sends what you've typed directly to Wikidata, a free database run by the Wikimedia Foundation, to suggest matching titles. We don't receive, see or store these searches. The Wikimedia Foundation handles them under its <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">privacy policy</a>.</p>
 
 <h3>Availability lookups</h3>
-<p>When you choose a title on the homepage, your browser asks our lookup service where it's streaming. The service runs on Cloudflare Workers. Each request includes the title's IMDb identifier and, like any web request, your IP address and browser details (such as browser type and language). We use this only to answer the request, keep the service secure and prevent abuse.</p>
-<p>We cache availability results by title for about a day so we don't have to fetch the same title repeatedly. The cache contains information about the title only, never about who asked for it. Our lookup service gets the data from the Streaming Availability API by Movie of the Night; your IP address and browser details aren't passed on to it.</p>
+<p>When you choose a title on the homepage, your browser asks our lookup service where it's streaming. The service runs on Cloudflare. Each request includes the title's IMDb identifier and, like any web request, your IP address and browser details such as browser type and language. We use these only to answer the request, keep the service secure and prevent abuse.</p>
+<p>We store availability results by title for about a day, so we don't have to fetch the same title again for the next visitor. These stored results describe the title only, never who asked for it. Our lookup service gets the data from the Streaming Availability API by Movie of the Night; your IP address and browser details aren't passed on to it.</p>
 
-<h3>Hosting and security logs</h3>
-<p>The site is hosted on GitHub Pages, and our lookup service runs on Cloudflare. Like most hosting providers, they receive your IP address and request details when you visit, and may keep short-term logs to deliver pages, protect against attacks and fix problems. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub privacy statement</a> and the <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare privacy policy</a>.</p>
+<h3>Hosting and security</h3>
+<p>The site's pages are hosted by GitHub Pages, and our lookup service runs on Cloudflare. Like all hosting providers, they receive your IP address and request details when you visit, and may keep short-term logs to deliver pages, protect against attacks and fix problems. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub privacy statement</a> and the <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare privacy policy</a>.</p>
+<p>The site's fonts are stored on our own hosting, so your browser doesn't contact Google Fonts or other font services when you visit.</p>
 
-<h3>Site statistics</h3>
-<p>We use Cloudflare Web Analytics to count visits and see which pages are used most. It doesn't use cookies, doesn't fingerprint your device, and doesn't follow you across other websites. We only see totals, such as the number of visits to a page, the countries visits come from and the referring websites.</p>
+{{#analytics}}<h3>Site statistics</h3>
+<p>We use Cloudflare Web Analytics to count visits and see which pages are used most. It doesn't use cookies, doesn't identify your device, and doesn't follow you across other websites. We only see totals, such as the number of visits to a page, the countries visits come from and the websites that linked to us.</p>
 
-<h3>Advertising</h3>
-<p>We show ads served by Google AdSense. Google and its partners use cookies and similar technologies to show ads, limit how often you see the same ad, measure how ads perform and prevent fraud. With your consent where required, they may also show ads based on your visits to this and other websites ("personalized ads"). Google acts as an independent controller for this processing. To learn more, see <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How Google uses information from sites or apps that use its services</a>.</p>
+{{/analytics}}{{#ads}}<h3>Advertising</h3>
+<p>We show ads served by Google AdSense. Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this site and other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this site and/or other sites on the internet. Google and its partners also use cookies to limit how often you see the same ad, measure how ads perform and prevent fraud.</p>
+<p>Some ads on the site may be served by other ad companies that Google works with. A list of these companies, with links to their websites, is available in Google's <a href="https://support.google.com/admanager/answer/9012903" rel="noopener">ad technology providers list</a>.</p>
+<p>You can opt out of personalized advertising from Google in <a href="https://adssettings.google.com" rel="noopener">Google's Ads Settings</a>, and from other participating ad companies at <a href="https://www.aboutads.info/choices/" rel="noopener">aboutads.info/choices</a> or, in Europe, <a href="https://www.youronlinechoices.eu" rel="noopener">youronlinechoices.eu</a>. You'll still see ads, but they won't be based on your browsing.</p>
+<p>To learn more, see <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How Google uses information from sites or apps that use its services</a>.</p>
 
-<h3>Affiliate links</h3>
-<p>Some links to VPN providers are affiliate links. When you click one, the provider (or an affiliate network working for it) may set a cookie or record the click so it can tell you came from our site. If you then buy a paid plan, it pays us a commission. We receive reports showing numbers of clicks and sales, not your name, email address or payment details. See our <a href="{{BASE}}disclosure/">affiliate disclosure</a>.</p>
+{{/ads}}<h3>Links to streaming services and VPN providers</h3>
+<p>Pages on the site link to streaming services and VPN providers. When you follow a link, you leave our site, and the other company's privacy policy applies.{{#affiliates}} Some links to VPN providers are affiliate links: the provider, or an affiliate network working for it, may set a cookie or record the click so it knows you came from our site, and pays us a commission if you buy a paid plan. We receive reports of numbers of clicks and sales, never your name, email address or payment details. See our <a href="{{BASE}}disclosure/">affiliate disclosure</a>.{{/affiliates}}</p>
 
 <h3>When you email us</h3>
-<p>If you email us, we receive your email address and anything you include in your message. We use it only to reply, handle your request and keep a record of privacy requests.</p>
+<p>If you email us, we receive your email address and whatever you include in your message. We use it only to reply, handle your request and, for privacy requests, keep a record that we did.</p>
 
-<h2>Cookies and similar technologies</h2>
-<p>We don't set any cookies of our own, and the site doesn't use your browser's local storage to track you. Cookies you may encounter:</p>
+<h2>Cookies</h2>
+{{^ads}}<p>The site doesn't set any cookies, and it doesn't use your browser's storage to track you.{{#affiliates}} If you click an affiliate link, the VPN provider or its affiliate network may set a cookie on its own website, as described above.{{/affiliates}}</p>
+{{/ads}}{{#ads}}<p>We don't set any cookies of our own, and the site doesn't use your browser's storage to track you. Cookies you may encounter on or after visiting the site:</p>
 <table>
   <thead><tr><th>Set by</th><th>Purpose</th><th>Your choices</th></tr></thead>
   <tbody>
-    <tr><td>Google and its advertising partners</td><td>Serving, limiting, measuring and, with consent, personalizing ads; fraud prevention</td><td>Consent and opt-out options in the site's privacy settings; <a href="https://adssettings.google.com" rel="noopener">Google ad settings</a>; your browser settings</td></tr>
-    <tr><td>VPN providers and affiliate networks, after you click an affiliate link</td><td>Recording that you came from our site</td><td>Their own cookie settings; your browser settings</td></tr>
-  </tbody>
+    <tr><td>Google and its advertising partners</td><td>Showing ads, limiting repeats, measuring performance, preventing fraud and, where you allow it, personalizing ads</td><td>Privacy settings link at the bottom of every page; Google's Ads Settings; your browser settings</td></tr>
+{{#affiliates}}    <tr><td>VPN providers and affiliate networks, after you click an affiliate link</td><td>Recording that you came from our site</td><td>Their own cookie settings; your browser settings</td></tr>
+{{/affiliates}}  </tbody>
 </table>
 <p>The site's search and lookups work without cookies, so blocking them won't stop you from using it.</p>
-
-<h2>Legal bases (EEA, UK and Switzerland)</h2>
-<p>If you're in the European Economic Area, the United Kingdom or Switzerland, we rely on these legal bases:</p>
+{{/ads}}
+<h2>Legal bases (Europe, the UK and Switzerland)</h2>
+<p>If you're in the European Economic Area, the United Kingdom or Switzerland, we rely on:</p>
 <ul>
-  <li><strong>Legitimate interests</strong> for answering lookups, hosting, security and cookieless site statistics. Our interest is running a reliable, secure site and understanding how it's used; we've kept this processing minimal so it doesn't override your rights.</li>
-  <li><strong>Consent</strong> for advertising cookies and personalized ads. We ask through a consent message from a Google-certified consent management platform before these are used, and you can withdraw consent at any time in the site's privacy settings.</li>
-  <li><strong>Legitimate interests or legal obligation</strong> for replying to your emails and keeping records of privacy requests.</li>
+  <li><strong>Legitimate interests</strong> for answering lookups, hosting, security{{#analytics}} and cookieless site statistics{{/analytics}}. Our interest is running a reliable, secure site, and we've kept this processing to the minimum needed.</li>
+{{#ads}}  <li><strong>Consent</strong> for advertising cookies and personalized ads. Before these are used, a consent message from a Google-certified consent platform asks for your choice. You can change it at any time with the privacy settings link at the bottom of every page.</li>
+{{/ads}}  <li><strong>Legitimate interests</strong> for replying to your emails, and <strong>legal obligation</strong> for keeping records of privacy requests.</li>
 </ul>
 
-<h2>Who we share information with</h2>
-<p>We don't sell personal information for money. Information is disclosed only to:</p>
+<h2>Who receives information</h2>
+<p>We don't sell personal information for money. Information is shared only with:</p>
 <ul>
-  <li><strong>Service providers</strong> that run the site for us: GitHub (hosting) and Cloudflare (lookup service, security and site statistics). They process information on our behalf.</li>
-  <li><strong>Google</strong>, for advertising, as described above.</li>
-  <li><strong>Wikimedia Foundation</strong>, which receives title searches directly from your browser.</li>
-  <li><strong>VPN providers and affiliate networks</strong>, after you click an affiliate link.</li>
-  <li><strong>Authorities or others</strong> when required by law, or to protect our rights, users or the public.</li>
-  <li><strong>A buyer or successor</strong> if the site is sold or transferred, subject to this policy.</li>
+  <li><strong>Service providers</strong> that run the site for us: GitHub (hosting) and Cloudflare (lookup service and security{{#analytics}}, and site statistics{{/analytics}}).</li>
+{{#ads}}  <li><strong>Google and its advertising partners</strong>, for advertising, as described above.</li>
+{{/ads}}  <li><strong>The Wikimedia Foundation</strong>, which receives title searches directly from your browser.</li>
+{{#affiliates}}  <li><strong>VPN providers and affiliate networks</strong>, after you click an affiliate link.</li>
+{{/affiliates}}  <li><strong>Authorities or others</strong>, when required by law or to protect our rights, our visitors or the public.</li>
+  <li><strong>A buyer or successor</strong>, if the site is sold or transferred, under the terms of this policy.</li>
 </ul>
 
-<h2>Information about US state privacy laws</h2>
-<p>Residents of California and several other US states, including Colorado, Connecticut, Oregon, Texas, Virginia and Washington, have specific rights under state law. This section gives the details those laws require.</p>
+<h2>US state privacy rights</h2>
+<p>California and a growing number of other US states give their residents specific privacy rights. Many of these laws only apply to businesses above a certain size, but we offer the same rights to every visitor, wherever they live.</p>
 
-<h3>Categories of personal information</h3>
-<p>In the past 12 months, we have collected or enabled the collection of the categories below. We don't collect sensitive personal information as defined by these laws.</p>
+<h3>Information we collect or allow others to collect</h3>
+<p>In the past 12 months, the site has collected, or allowed the partners named in this policy to collect, the categories below. We don't collect sensitive personal information.</p>
 <table>
-  <thead><tr><th>Category</th><th>Examples</th><th>Source</th><th>Purpose</th><th>Disclosed to</th></tr></thead>
+  <thead><tr><th>Category</th><th>Examples</th><th>Why</th><th>Shared with</th></tr></thead>
   <tbody>
-    <tr><td>Identifiers</td><td>IP address, cookie and advertising identifiers, email address if you write to us</td><td>You and your device</td><td>Running and securing the site, advertising, replying to you</td><td>Service providers; Google; affiliate partners after a click</td></tr>
-    <tr><td>Internet or other network activity</td><td>Pages viewed, titles looked up, links clicked, browser type</td><td>Your device</td><td>Running the site, statistics, advertising</td><td>Service providers; Google</td></tr>
-    <tr><td>Approximate location</td><td>Country or region inferred from IP address</td><td>Your device</td><td>Statistics, ad delivery</td><td>Service providers; Google</td></tr>
-    <tr><td>Inferences</td><td>Ad interests inferred by Google</td><td>Google, from your activity</td><td>Personalized ads</td><td>Google</td></tr>
-  </tbody>
+    <tr><td>Identifiers</td><td>IP address{{#ads}}, cookie and advertising IDs{{/ads}}, and your email address if you write to us</td><td>Running and securing the site{{#ads}}, advertising{{/ads}}, replying to you</td><td>Service providers{{#ads}}; Google{{/ads}}</td></tr>
+    <tr><td>Internet activity</td><td>Pages viewed, titles looked up, links clicked, browser type</td><td>Running the site{{#analytics}}, statistics{{/analytics}}{{#ads}}, advertising{{/ads}}</td><td>Service providers{{#ads}}; Google{{/ads}}</td></tr>
+    <tr><td>Approximate location</td><td>Country or region worked out from your IP address</td><td>Security{{#analytics}}, statistics{{/analytics}}{{#ads}}, choosing which ads to show{{/ads}}</td><td>Service providers{{#ads}}; Google{{/ads}}</td></tr>
+{{#ads}}    <tr><td>Inferences</td><td>Ad interests Google infers from your browsing</td><td>Personalized ads</td><td>Google</td></tr>
+{{/ads}}  </tbody>
 </table>
 
-<h3>"Selling", "sharing" and targeted advertising</h3>
-<p>Allowing Google to use cookies for personalized ads may count as "selling" or "sharing" personal information, or as "targeted advertising", under some state laws, even though no money changes hands for the data itself. You can opt out by using the privacy settings link on the site. We also treat a Global Privacy Control signal from your browser as a valid opt-out request for that browser. We don't knowingly sell or share the personal information of anyone under 16.</p>
+{{#ads}}<h3>"Selling", "sharing" and targeted advertising</h3>
+<p>Letting Google use cookies for personalized ads may count as "selling" or "sharing" personal information, or as "targeted advertising", under some state laws, even though nobody pays us for the information itself. You can opt out with the privacy settings link at the bottom of every page. If your browser sends a Global Privacy Control signal, we treat it as an opt-out for that browser and ask Google to show only non-personalized ads. We don't knowingly sell or share the personal information of anyone under 16.</p>
 
-<h3>Your rights</h3>
-<p>Depending on your state, you may have the right to:</p>
+{{/ads}}{{^ads}}<h3>We don't sell or share personal information</h3>
+<p>We don't sell personal information, share it for targeted advertising, or use it to profile you.</p>
+
+{{/ads}}<h3>Your rights</h3>
+<p>You can ask us to:</p>
 <ul>
-  <li>know what personal information we have collected about you and how it's used and disclosed,</li>
-  <li>access a copy of it,</li>
-  <li>correct it if it's inaccurate,</li>
-  <li>delete it,</li>
-  <li>opt out of its sale, its sharing for cross-context behavioral advertising, and targeted advertising, and</li>
-  <li>not be treated differently for using any of these rights.</li>
+  <li>tell you what personal information we have about you and how it's used and shared,</li>
+  <li>give you a copy of it,</li>
+  <li>correct it if it's wrong,</li>
+  <li>delete it{{#ads}}, and</li>
+  <li>stop selling or sharing it, or using it for targeted advertising{{/ads}}.</li>
 </ul>
+<p>We won't treat you differently for using any of these rights.</p>
 
 <h3>How to make a request</h3>
-<p>Email {{CONTACT_EMAIL}} with "Privacy request" in the subject line and tell us which right you'd like to use and your state of residence. Because we don't run accounts or link information to names, we may ask for details that help us find information related to you, such as the approximate dates you visited. We'll respond within 45 days, and may extend that by a further 45 days where the law allows, telling you if we do.</p>
-<p>You can use an authorized agent to make a request for you. We may ask the agent for proof of your written permission and ask you to confirm your identity directly.</p>
+<p>Email {{CONTACT_EMAIL}} with "Privacy request" in the subject line and tell us what you'd like us to do. Because the site has no accounts and doesn't link information to names, we may ask for details that help us find information related to you, such as roughly when you visited. We'll reply within 45 days. If we need longer, we'll tell you why, and take no more than another 45 days.</p>
+<p>Someone else, such as an authorized agent, can make a request for you. We may ask them for proof of your permission and ask you to confirm your identity.</p>
 
 <h3>Appeals</h3>
-<p>If we decline your request, you can appeal by replying to our decision with "Appeal" in the subject line. We'll respond within the time required by your state's law, usually 45 or 60 days. If you're not satisfied with the outcome, you can contact your state attorney general.</p>
+<p>If we turn down your request, you can appeal by replying to our decision with "Appeal" in the subject line. We'll answer within 60 days. If you're unhappy with the result, you can contact your state attorney general.</p>
 
-<h2>Your rights in the EEA, UK and Switzerland</h2>
-<p>You have the right to access, correct or delete personal information about you, to restrict or object to its processing (including processing based on legitimate interests), to data portability, and to withdraw consent at any time without affecting earlier processing. To use these rights, email {{CONTACT_EMAIL}}. We'll respond within one month, which may be extended by two further months for complex requests. You also have the right to complain to your local data protection authority.</p>
+<h2>Rights in Europe, the UK and Switzerland</h2>
+<p>You have the right to access, correct or delete personal information about you, to restrict or object to how it's used (including uses based on legitimate interests), to receive a portable copy, and to withdraw consent at any time without affecting earlier processing. Email {{CONTACT_EMAIL}} to use these rights. We'll respond within one month, or within three months for complex requests, telling you if we need the extra time. You can also complain to your local data protection authority.</p>
 
 <h2>How long information is kept</h2>
 <ul>
-  <li><strong>Cached availability results:</strong> about one day. They contain no personal information.</li>
-  <li><strong>Hosting and security logs:</strong> kept by GitHub and Cloudflare for the short periods described in their policies.</li>
-  <li><strong>Site statistics:</strong> aggregated totals, kept as long as useful.</li>
-  <li><strong>Emails and privacy requests:</strong> as long as needed to handle your message, and records of privacy requests for 24 months as some state laws require.</li>
-  <li><strong>Advertising and affiliate cookies:</strong> according to the policies of the companies that set them.</li>
-</ul>
+  <li><strong>Stored availability results:</strong> about one day. They contain no personal information.</li>
+  <li><strong>Hosting and security logs:</strong> kept by GitHub and Cloudflare for the short periods set out in their policies.</li>
+{{#analytics}}  <li><strong>Site statistics:</strong> totals only, kept as long as they're useful.</li>
+{{/analytics}}  <li><strong>Emails:</strong> as long as needed to deal with your message. Records of privacy requests are kept for 24 months.</li>
+{{#ads}}  <li><strong>Advertising cookies:</strong> according to Google's and its partners' policies.</li>
+{{/ads}}</ul>
 
 <h2>International transfers</h2>
-<p>We're based in the United States, and our service providers may process information in the United States and other countries whose data protection laws differ from yours. Where required, transfers rely on appropriate safeguards, such as the European Commission's standard contractual clauses or the EU–US Data Privacy Framework.</p>
+<p>We're based in the United States, and our service providers may handle information in the United States and other countries whose data protection laws differ from yours. Where required, transfers are protected by safeguards such as the European Commission's standard contractual clauses or the EU–US Data Privacy Framework.</p>
 
 <h2>Children</h2>
-<p>The site is meant for a general audience and isn't directed at children under 13. We don't knowingly collect personal information from children under 13, or, in the EEA and UK, from children under 16 for advertising purposes. If you believe a child has given us personal information, email us and we'll delete it.</p>
+<p>The site is for a general audience and isn't directed at children under 13. We don't knowingly collect personal information from children under 13{{#ads}}, or use the information of children under 16 in Europe and the UK for personalized ads{{/ads}}. If you believe a child has given us personal information, email us and we'll delete it.</p>
 
 <h2>Security</h2>
-<p>The site is served only over encrypted HTTPS connections, our lookup service keeps its API credentials private, and we collect as little as we can. No system is perfectly secure, but we take reasonable steps to protect information involved in running the site.</p>
+<p>The site only uses encrypted HTTPS connections, our lookup service keeps its access keys private, and we collect as little information as we can. No system is perfectly secure, but we take reasonable steps to protect the information involved in running the site.</p>
 
 <h2>Do Not Track</h2>
-<p>Browsers' "Do Not Track" setting has no agreed meaning, so the site doesn't respond to it. We do honor Global Privacy Control, as described above.</p>
+<p>There's no agreed standard for how websites should respond to browsers' "Do Not Track" setting, so the site doesn't respond to it.{{#ads}} We do honor Global Privacy Control signals, as described above.{{/ads}}</p>
 
 <h2>Changes to this policy</h2>
-<p>We may update this policy as the site or the law changes. We'll change the effective date at the top, and for significant changes we'll post a notice on the site before they take effect.</p>
+<p>We'll update this policy when the site or the law changes, and change the effective date at the top. For significant changes, we'll post a notice on the site before they take effect.</p>
 
 <h2>Contact</h2>
 <p>{{OPERATOR}}<br>Email: {{CONTACT_EMAIL}}</p>

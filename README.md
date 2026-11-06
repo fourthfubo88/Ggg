@@ -27,7 +27,7 @@ Where in the world is it streaming? A static site with live title search, a page
 
 ## Before launch
 
-1. Fill in the legal settings above and have the pages in `content/` reviewed; each has notes for the reviewer at the top.
+1. Legal pages: sections about ads, analytics and affiliate links appear automatically once each is switched on, so the policy always matches the site. Update `legalEffectiveDate` whenever you switch one on.
 2. Buy a domain, add it in **Settings → Pages → Custom domain**, and update `siteUrl`. `robots.txt` and `ads.txt` only work at the root of a domain.
 3. Set `ALLOWED_ORIGIN` in `wrangler.toml` to the site's origin (for example `https://example.com`).
 4. Submit `sitemap.xml` in Google Search Console.

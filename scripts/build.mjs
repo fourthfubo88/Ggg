@@ -173,7 +173,8 @@ function layout({ path: pagePath, title, description, hero = false, noindex = fa
   const nav = [["", "Search"], ["watch/", "All titles"], ["about/", "About"]]
     .map(([p, label]) => `<a href="${BASE}${p}"${p === pagePath ? ' aria-current="page"' : ""}>${label}</a>`).join("");
   const adsense = cfg.adsenseClientId
-    ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(cfg.adsenseClientId)}" crossorigin="anonymous"></script>` : "";
+    ? `<script>if(navigator.globalPrivacyControl){(window.adsbygoogle=window.adsbygoogle||[]).requestNonPersonalizedAds=1;}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(cfg.adsenseClientId)}" crossorigin="anonymous"></script>` : "";
   const analytics = cfg.cloudflareAnalyticsToken
     ? `<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"${esc(cfg.cloudflareAnalyticsToken)}"}'></script>` : "";
   const verify = cfg.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(cfg.googleSiteVerification)}">` : "";
@@ -213,19 +214,43 @@ ${body}
       <a href="${BASE}privacy/">Privacy</a>
       <a href="${BASE}terms/">Terms</a>
       <a href="${BASE}disclosure/">Affiliate disclosure</a>
+      ${cfg.adsenseClientId ? `<a href="#" id="privacy-settings">Privacy settings</a>` : ""}
     </nav>
     <p>© ${new Date().getUTCFullYear()} ${esc(NAME)}</p>
   </div>
 </footer>
 ${scripts}
+${cfg.adsenseClientId ? `<script>
+document.getElementById("privacy-settings").addEventListener("click", e => {
+  e.preventDefault();
+  window.googlefc = window.googlefc || {}; googlefc.callbackQueue = googlefc.callbackQueue || [];
+  googlefc.callbackQueue.push({ CONSENT_API_READY: () => googlefc.showRevocationMessage() });
+});
+</script>` : ""}
 ${analytics}
 </body>
 </html>
 `;
 }
 
+const FEATURES = {
+  ads: !!cfg.adsenseClientId,
+  analytics: !!cfg.cloudflareAnalyticsToken,
+  affiliates: anyAffiliate,
+};
+
+function applyFeatures(html) {
+  let prev;
+  do {
+    prev = html;
+    html = html.replace(/\{\{([#^])(\w+)\}\}([\s\S]*?)\{\{\/\2\}\}/g, (_, mode, key, inner) =>
+      (mode === "#") === !!FEATURES[key] ? inner : "");
+  } while (html !== prev);
+  return html;
+}
+
 function fillTokens(html) {
-  return html
+  return applyFeatures(html)
     .replace(/<!--[\s\S]*?-->\s*/g, "")
     .replaceAll("{{BASE}}", BASE)
     .replaceAll("{{SITE_NAME}}", esc(NAME))
