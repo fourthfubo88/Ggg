@@ -1,4 +1,4 @@
-// Airmail lookup worker: keeps your Streaming Availability API key secret
+// Streaming Passport lookup worker: keeps your Streaming Availability API key secret
 // and caches each title's results for a day so the free quota stretches further.
 
 const DAY = 86400;

@@ -1,4 +1,4 @@
-// Airmail homepage: live title search (Wikidata) + availability lookup (your Cloudflare worker).
+// Streaming Passport homepage: live title search (Wikidata) + availability lookup (your Cloudflare worker).
 // Settings come from config.json via window.AIRMAIL, written into the page at build time.
 (() => {
 const CFG = window.AIRMAIL || {};
