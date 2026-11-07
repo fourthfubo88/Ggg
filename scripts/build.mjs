@@ -1,4 +1,4 @@
-// Airmail site builder.
+// Streaming Passport site builder.
 // 1. Picks popular movies and series from Wikidata (free, no key).
 // 2. Looks up a limited number of them per run through your Cloudflare worker (which holds the API key and caches).
 // 3. Writes the whole site into _site/: homepage, a page per title, browse page, legal pages, sitemap.
@@ -18,7 +18,7 @@ const cfg = JSON.parse(await fs.readFile(path.join(ROOT, "config.json"), "utf8")
 const VPNS = JSON.parse(await fs.readFile(path.join(ROOT, "data", "vpns.json"), "utf8"));
 const SITE_URL = cfg.siteUrl.replace(/\/?$/, "/");
 const BASE = new URL(SITE_URL).pathname;
-const NAME = cfg.siteName || "Airmail";
+const NAME = cfg.siteName || "Streaming Passport";
 const TODAY = new Date().toISOString().slice(0, 10);
 const UA = `${NAME}SiteBuilder/1.0 (${SITE_URL})`;
 

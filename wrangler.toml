@@ -10,4 +10,4 @@ id = "220bb79112ee4544809d9161393f062b"
 # "direct" if your key came from developers.movieofthenight.com, "rapidapi" if it came from RapidAPI
 API_SOURCE = "direct"
 # Once your site has a real address, put it here (e.g. "https://airmail.pages.dev") so only your site can use the worker
-ALLOWED_ORIGIN = "https://fourthfubo88.github.io"
+ALLOWED_ORIGIN = "https://streamingpassport.com"

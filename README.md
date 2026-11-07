@@ -1,4 +1,4 @@
-# Airmail
+# Streaming Passport
 
 Where in the world is it streaming? A static site with live title search, a page for every popular title, and free VPNs by country.
 
