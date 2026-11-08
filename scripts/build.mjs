@@ -192,7 +192,9 @@ ${noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" hr
 <meta property="og:title" content="${esc(fullTitle)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(canonical)}">
-${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">\n<meta name="twitter:card" content="summary">` : ""}
+<meta property="og:image" content="${esc(ogImage || SITE_URL + "assets/logo.png")}">
+<meta name="twitter:card" content="summary">
+<link rel="apple-touch-icon" href="${BASE}assets/logo.png">
 <meta name="theme-color" content="#1A2238">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23C8323C'/%3E%3Cpath d='M0 32 32 0' stroke='%23F8F9F7' stroke-width='6'/%3E%3Cpath d='M-8 24 24-8M8 40 40 8' stroke='%231E4FA0' stroke-width='6'/%3E%3C/svg%3E">
 ${FONT_TAGS}
